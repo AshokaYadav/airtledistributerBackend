@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');  // Import the database connection
+const bankController = require('../controllers/bankController');
 
-// Route to get all users from the users table
-router.get('/', (req, res) => {
-  db.query('SELECT * FROM admin', (err, results) => {
-    if (err) {
-      console.error('Error fetching data from MySQL:', err);
-      res.status(500).send('Error fetching data');
-    } else {
-      res.json(results);
-    }
-  });
-});
+// Create a new bank account
+router.post('/', bankController.createBankAccount);
+
+// Get all bank accounts
+router.get('/', bankController.getAllBankAccounts);
+
+// Get a bank account by ID
+router.get('/:accountid', bankController.getBankAccountById);
+
+// Update a bank account by ID
+router.put('/:accountid', bankController.updateBankAccount);
+
+// Delete a bank account by ID
+router.delete('/:accountid', bankController.deleteBankAccount);
 
 module.exports = router;
